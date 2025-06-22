@@ -12,10 +12,9 @@ The application follows a layered architecture with typed actors:
 
 - **QuickstartApp.scala**: Main application entry point that bootstraps the HTTP server and actor system
 - **UserRegistry.scala**: Core business logic actor that maintains user state in memory using immutable collections
-- **UserRoutes.scala**: HTTP route definitions and request/response handling with JSON marshalling
-- **JsonFormats.scala**: Circe JSON format definitions for serialization/deserialization
+- **UserRoutes.scala**: HTTP route definitions and request/response handling with Circe JSON marshalling using automatic derivation
 
-The actor system uses the ask pattern with configurable timeouts for communication between HTTP routes and the UserRegistry actor.
+The actor system uses the ask pattern with configurable timeouts for communication between HTTP routes and the UserRegistry actor. JSON serialization is handled automatically by Circe using `io.circe.generic.auto._` without requiring explicit format definitions.
 
 ## Development Commands
 
@@ -38,6 +37,13 @@ sbtn scalafmtSbt  # Format build files
 sbtn scalafmtAll  # Format all Scala source files
 ```
 Always run both formatting commands after modifying build files or Scala source code.
+
+### Documentation Maintenance
+When making changes to the codebase, always review and update CLAUDE.md to ensure it accurately reflects:
+- Architecture changes (new/removed/modified components)
+- Dependency updates or additions
+- New development commands or workflows
+- Updated testing approaches or patterns
 
 ### Development Tools
 The project is configured with Metals LSP support and SemanticDB for enhanced IDE integration.
