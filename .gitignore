@@ -1,0 +1,13 @@
+*.class
+.idea
+target/
+.bsp
+
+# vscode
+.vscode/
+.bsp/
+.metals/
+metals.sbt
+
+# LLM
+.claude/
