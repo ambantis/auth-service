@@ -30,9 +30,9 @@ class UserRoutesSpec extends AnyWordSpec with Matchers with ScalaFutures with Sc
   val userRegistry = testKit.spawn(UserRegistry())
   lazy val routes = new UserRoutes(userRegistry).userRoutes
 
-  import JsonFormats._
-  // use the json formats to marshal and unmarshall objects in the test
-  import pekko.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
+  import UserRegistry.ActionPerformed
+  import com.github.pjfanning.pekkohttpcirce.FailFastCirceSupport._
+  import io.circe.generic.auto._
   // #set-up
 
   // #actual-test
@@ -48,7 +48,7 @@ class UserRoutesSpec extends AnyWordSpec with Matchers with ScalaFutures with Sc
         contentType should ===(ContentTypes.`application/json`)
 
         // and no entries should be in the list:
-        entityAs[String] should ===("""{"users":[]}""")
+        entityAs[Users] should ===(Users(Seq.empty))
       }
     }
     // #actual-test
@@ -68,7 +68,7 @@ class UserRoutesSpec extends AnyWordSpec with Matchers with ScalaFutures with Sc
         contentType should ===(ContentTypes.`application/json`)
 
         // and we know what message we're expecting back:
-        entityAs[String] should ===("""{"description":"User Kapi created."}""")
+        entityAs[ActionPerformed] should ===(ActionPerformed("User Kapi created."))
       }
     }
     // #testing-post
@@ -83,8 +83,8 @@ class UserRoutesSpec extends AnyWordSpec with Matchers with ScalaFutures with Sc
         // we expect the response to be json:
         contentType should ===(ContentTypes.`application/json`)
 
-        // and no entries should be in the list:
-        entityAs[String] should ===("""{"description":"User Kapi deleted."}""")
+        // and we know what message we're expecting back:
+        entityAs[ActionPerformed] should ===(ActionPerformed("User Kapi deleted."))
       }
     }
     // #actual-test

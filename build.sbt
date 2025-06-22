@@ -19,7 +19,7 @@ lazy val root = (project in file(".")).settings(
     "io.circe" %% "circe-parser" % Version.circe,
     "org.apache.pekko" %% "pekko-actor-testkit-typed" % Version.pekko % Test,
     "org.apache.pekko" %% "pekko-actor-typed" % Version.pekko,
-    "org.apache.pekko" %% "pekko-http-spray-json" % Version.pekkoHttp,
+    "com.github.pjfanning" %% "pekko-http-circe" % "2.6.0",
     "org.apache.pekko" %% "pekko-http-testkit" % Version.pekkoHttp % Test,
     "org.apache.pekko" %% "pekko-http" % Version.pekkoHttp,
     "org.apache.pekko" %% "pekko-stream" % Version.pekko,

@@ -16,9 +16,8 @@ import pekko.util.Timeout
 //#user-routes-class
 class UserRoutes(userRegistry: ActorRef[UserRegistry.Command])(implicit val system: ActorSystem[_]) {
 
-  import JsonFormats._
-  // #user-routes-class
-  import pekko.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
+  import com.github.pjfanning.pekkohttpcirce.FailFastCirceSupport._
+  import io.circe.generic.auto._
   // #import-json-formats
 
   // If ask takes more time than this to complete the request is failed

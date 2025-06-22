@@ -13,7 +13,7 @@ The application follows a layered architecture with typed actors:
 - **QuickstartApp.scala**: Main application entry point that bootstraps the HTTP server and actor system
 - **UserRegistry.scala**: Core business logic actor that maintains user state in memory using immutable collections
 - **UserRoutes.scala**: HTTP route definitions and request/response handling with JSON marshalling
-- **JsonFormats.scala**: Spray JSON format definitions for serialization/deserialization
+- **JsonFormats.scala**: Circe JSON format definitions for serialization/deserialization
 
 The actor system uses the ask pattern with configurable timeouts for communication between HTTP routes and the UserRegistry actor.
 
@@ -31,6 +31,13 @@ sbtn clean        # Clean build artifacts
 sbtn test         # Run all tests
 sbtn "testOnly com.ambantis.auth.UserRoutesSpec"  # Run specific test class
 ```
+
+### Code Formatting
+```bash
+sbtn scalafmtSbt  # Format build files
+sbtn scalafmtAll  # Format all Scala source files
+```
+Always run both formatting commands after modifying build files or Scala source code.
 
 ### Development Tools
 The project is configured with Metals LSP support and SemanticDB for enhanced IDE integration.
@@ -54,10 +61,10 @@ The service exposes a REST API on port 8080:
 
 - Apache Pekko HTTP 1.2.0 for HTTP server and routing
 - Apache Pekko Actor Typed 1.1.4 for the actor system
-- Spray JSON for JSON serialization
+- Circe 0.14.13 for JSON serialization with automatic derivation
+- pekko-http-circe 2.6.0 for Circe integration with Pekko HTTP
 - ScalaTest 3.2.12 for testing with Pekko HTTP TestKit
-- Circe 0.14.13 (configured but not currently used)
 
 ## Testing Approach
 
-Tests use ScalaTest with Pekko HTTP TestKit for route testing. The UserRoutesSpec demonstrates testing HTTP endpoints with JSON marshalling/unmarshalling and proper status code validation.
+Tests use ScalaTest with Pekko HTTP TestKit for route testing. The UserRoutesSpec demonstrates testing HTTP endpoints with Circe JSON marshalling/unmarshalling and proper status code validation. Tests validate responses using case class types rather than raw JSON strings.
